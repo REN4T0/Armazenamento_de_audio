@@ -1,6 +1,6 @@
 <?php
 include_once("../routes/routes.php");
-include_once($connRoute);
+include_once("../database/connect.php");
 
 if(($_SERVER["REQUEST_METHOD"] === "POST") && (isset($_FILES["audio"]))){
     $audioFile = file_get_contents($_FILES["audio"]["tmp_name"]);
