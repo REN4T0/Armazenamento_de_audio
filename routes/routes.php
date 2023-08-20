@@ -15,6 +15,9 @@
     // Rotas para pastas do frontend
     $jsRoute = $frontendRoute . "js/";
 
+    // Rotas para pastas do JS
+    $apiFolderRoute = $jsRoute . "api/";
+
     //Rota para o arquivo de conexão
     $connRoute = $dbFolderRoute . "connect.php";
 
@@ -23,6 +26,7 @@
     $viewAudioRoute = $phpFolderRoute . "viewAudio.php";
 
     // Rotas para arquivos JS
+    $rightHourRoute = $apiFolderRoute . "rightHour.js";
     $fileNameRoute = $jsRoute . "fileName.js";
     
     // Rota para páginas
