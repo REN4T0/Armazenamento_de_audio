@@ -1,8 +1,8 @@
 <?php
-    $host = "localhost";
-    $user = "root";
-    $password = "";
-    $dbname = "audiodatabase";
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "audioDB";
 
-    $conn = new mysqli($host, $user, $password, $dbname);
+$conn = mysqli_connect($host, $user, $password, $database);
 ?>

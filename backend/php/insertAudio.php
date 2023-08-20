@@ -1,25 +1,47 @@
 <?php
-include_once("../routes/routes.php");
-include_once("../database/connect.php");
+include_once("../../routes/routes.php");
+include_once($connRoute);
 
-if(($_SERVER["REQUEST_METHOD"] === "POST") && (isset($_FILES["audio"]))){
-    $audioFile = file_get_contents($_FILES["audio"]["tmp_name"]);
+function verifyNameHaveMP3($name){
+    $audioNameToVerify = $name;
 
-    $insertFile = "INSERT INTO audioFile (audioFile) VALUES (?)";
-    $stmt = $conn->prepare($insertFile);
-    $stmt->bind_param("d", $audioFile);
-
-    if($stmt->execute()){
-        $_SESSION["insertConfirmation"] = "Sucesso";
-        header("location:" . $indexRoute);
-    }else{
-        $_SESSION["insertConfirmation"] = "A operação falhou";
-        header("location:" . $indexRoute);
+    // Verificando se o áudio tem o .MP3 e, caso não tenha, será inserido.
+    if(!preg_match("/.mp3/i", $audioNameToVerify)){
+        $audioNameVerifyed = $audioNameToVerify . ".mp3";
     }
 
-    $stmt->close();
-}else{
-    $_SESSION["msg"] = "Escolha um áudio";
-    header("location:" . $indexRoute);
+    return($audioNameVerifyed); 
 }
+
+function storagingAudio($audioNameReceived, $audioReceived){
+    // Estabelecendo o caminho da pasta para qual esse arquivo vai e inserindo o nome dele
+    $targetPath = "../../audio/" . $audioNameReceived;
+    
+    // Movendo o arquivo
+    if(move_uploaded_file($audioReceived, $targetPath)){
+        $response = "Success";
+    }else{
+        $response = "Error";
+    }
+
+    return array($response, $targetPath);
+}
+
+if(($_SERVER['REQUEST_METHOD'] == "POST") && (isset($_FILES["audioFile"]))){
+    $audioName = htmlspecialchars($_POST["fileName"]);
+    $audio = $_FILES["audioFile"]["tmp_name"];
+
+    // Recebendo o tamanho do áudio em bytes e convertendo-o em megabytes de imediato
+    $audioSize = round(htmlspecialchars($_FILES["audioFile"]["size"]) / 1048576, 2);
+}else{
+    echo "Erro";
+}
+
+echo "$audioName, $audioSize";
+
+// $audioNameResult = verifyNameHaveMP3($audioName);
+// $audioStorageResult = storagingAudio($audioNameResult, $audio);
+
+// print_r($audioStorageResult);
+
 ?>
