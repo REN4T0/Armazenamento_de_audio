@@ -8,6 +8,8 @@ function verifyNameHaveMP3($name){
     // Verificando se o áudio tem o .MP3 e, caso não tenha, será inserido.
     if(!preg_match("/.mp3/i", $audioNameToVerify)){
         $audioNameVerifyed = $audioNameToVerify . ".mp3";
+    }else{
+        $audioNameVerifyed = $audioNameToVerify;
     }
 
     return($audioNameVerifyed); 
@@ -50,6 +52,7 @@ function storagingInfoInDB($name, $path, $storageDate, $size, $conn){
 }
 
 
+
 // O princípio - Recebendo os dados
 if(($_SERVER['REQUEST_METHOD'] == "POST") && (isset($_FILES["audioFile"]))){
     $audioName = htmlspecialchars($_POST["fileName"]);
@@ -72,8 +75,9 @@ if($audioStorageResult === "Error"){
     $storageResult = storagingInfoInDB($audioNameResult, $audioStorageResult, $datetime, $audioSize, $conn); //Além dos dados armazenados no banco, enviei a variável de conexão para executar a inserção das informações no banco de dados
     
     if($storageResult){
-        $_SESSION['msg'] = "Áudio armazenado com sucesso!";
-        header("location:" . $indexRoute);
+        // $_SESSION['msg'] = "Áudio armazenado com sucesso!";
+        // header("location:" . $indexRoute);
+        header("location:" . $viewAudioRoute);
     }else{
         $_SESSION['msg'] = "Não foi possível armazenar o áudio";
         header("location:" . $indexRoute);

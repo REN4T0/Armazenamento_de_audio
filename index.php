@@ -1,5 +1,6 @@
 <?php
 include_once("./routes/routes.php");
+// include_once("./routes/routes.php");
 ?>
 
 <!DOCTYPE html>
@@ -24,5 +25,9 @@ include_once("./routes/routes.php");
         <input type="file" name="audioFile" id="audioFileInput" onchange="updateFileName()">
         <button type="submit">Enviar áudio</button>
     </form>
+
+    <?php
+        echo $_SESSION['exposeElement'];
+    ?>
 </body>
 </html>
